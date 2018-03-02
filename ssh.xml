@@ -1,14 +1,22 @@
 <project name="ssh" default="test">
 
+	
 	<property file="prop1.properties"/>
-	<target name="test">
+	
+	<target name="test" depends="clean">
 		<sshexec host="${server}" username="${uname}" password="${pwd}" command="touch /dir1/test1.txt" trust="true"/>
+		<echo> "sourth path is: ${src}"</echo>
 		<scp todir="${path}" username="${uname}" password="${pwd}" trust="true">
-			<fileset dir="${src}">
-				<include name="/*.*"/>
+				<fileset dir="${src}">
+				<include name="**/*.*"/>
 			</fileset>
 		</scp>
 		<input message="what is your name?" addproperty="your-name"/>
 		<echo> "What Up! ${your-name}"</echo>
+	</target>
+	
+	<target name="clean">
+		<echo> "Deleting file from remote server</echo>
+		<sshexec host="${server}" username="${uname}" password="${pwd}" command="rm -rf ${rmt_dir}/*.*" trust="true"/>
 	</target>
 </project>
