@@ -1,0 +1,23 @@
+<project name="ssh" default="test">
+
+	<!--<property file="prop1.properties"/>-->
+	<target name="test">
+	
+		<echo> "Creating a file on remote server"</echo>
+		<input message="Provide Server IP address" addproperty="server"/>
+		<input message="Provide User Name" addproperty="uname"/>
+		<input message="Provide Password" addproperty="pwd"/>
+		
+		<sshexec host="${server}" username="${uname}" password="${pwd}" command="touch /dir1/test1.txt" trust="true"/>
+		<echo> "Using SCP for copying files to Remote Server"</echo>
+		<input message="Provide Remote Path in the format Username@Server_IP_Address:/path" addproperty="path"/>
+		<input message="Provide Source Path" addproperty="src"/>
+		<scp todir="${path}" username="${uname}" password="${pwd}" trust="true">
+			<fileset dir="${src}">
+				<include name="/*.*"/>
+			</fileset>
+		</scp>
+		<input message="what is your name?" addproperty="your-name"/>
+		<echo> "What Up! ${your-name}"</echo>
+	</target>
+</project>

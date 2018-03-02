@@ -1,0 +1,10 @@
+<project name="ssh" default="test">
+	<target name="test">
+		<sshexec host="${host}" username="${uname}" password="${pwd}" command="touch /dir1/test1.txt" trust="true"/>
+		<scp todir="${path}" username="${uname}" password="${pwd}" trust="true">
+			<fileset dir="${src}">
+				<include name="/*.*"/>
+			</fileset>
+		</scp>
+	</target>
+</project>

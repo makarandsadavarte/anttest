@@ -1,0 +1,14 @@
+<project name="ssh" default="test">
+
+	<property file="prop1.properties"/>
+	<target name="test">
+		<sshexec host="${server}" username="${uname}" password="${pwd}" command="touch /dir1/test1.txt" trust="true"/>
+		<scp todir="${path}" username="${uname}" password="${pwd}" trust="true">
+			<fileset dir="${src}">
+				<include name="/*.*"/>
+			</fileset>
+		</scp>
+		<input message="what is your name?" addproperty="your-name"/>
+		<echo> "What Up! ${your-name}"</echo>
+	</target>
+</project>
